@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Project</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to your CSS file -->
+</head>
+<style type="text/css">
+    body {
+    font-family: Arial, sans-serif;
+}
+/* Previous CSS remains the same */
+
+.image-preview {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.image-preview img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="file"],
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+</style>
+<body>
+    <div class="container">
+        <h1>Welcome to Our E-commerce Platform</h1>
+        <form id="productForm" action="">
+            <div class="form-group">
+                <label for="imageUpload">Upload Image:</label>
+                <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
+                  <div class="image-preview" id="imagePreview">
+            <p>No image selected</p>
+        </div>
+            </div>
+            <div class="form-group">
+                <label for="newCategory">Create New Category:</label>
+                <input type="text" id="newCategory" name="newCategory">
+            </div>
+            <div class="form-group">
+                <label for="selectCategory">Select Category:</label>
+                <select id="selectCategory" name="selectCategory">
+                    <option value="">--Please choose an option--</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing">Clothing</option>
+                    <!-- Add more categories here -->
+                </select>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script>document.getElementById('productForm').addEventListener('submit', function(event){
+    event.preventDefault();
+    // Form submission handling remains the same
+});
+
+// Handle new category creation and adding to select options
+document.getElementById('newCategory').addEventListener('change', function() {
+    const newCategory = this.value.trim();
+    if(newCategory) { // Check if input is not empty
+        const select = document.getElementById('selectCategory');
+        const option = document.createElement('option');
+        option.value = newCategory.toLowerCase();
+        option.text = newCategory.charAt(0).toUpperCase() + newCategory.slice(1);
+        select.appendChild(option);
+        
+        // Automatically select the newly added category
+        select.value = option.value;
+        
+        // Reset the input field
+        this.value = '';
+    }
+});
+
+// Handle image upload and preview
+document.getElementById('imageUpload').addEventListener('change', function() {
+    const preview = document.getElementById('imagePreview');
+    const [file] = this.files;
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.innerHTML = `<img src="${e.target.result}" alt="Product Image">`;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.innerHTML = '<p>No image selected</p>';
+    }
+});
+</script> <!-- Link to your JavaScript file -->
+</body>
+</html>
